@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blogs | Meal Prep</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f6f5f1;
+      --card: #ffffff;
+      --text: #1f1f1f;
+      --muted: #6c757d;
+      --primary: #4B5320;
+      --border: #e5e7eb;
+    }
+
+    body.dark {
+      --bg: #020617;
+      --card: #0f172a;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2933;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      transition: background .3s, color .3s;
+    }
+
+    .blog-container {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    .blog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      height: 100%;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,.12);
+    }
+
+    .blog-card h5 {
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .blog-card p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .blog-meta {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .category-badge {
+      background: rgba(75,83,32,.15);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+
+{% include "navbar.html" %}
+
+<div class="blog-container">
+  
+  <h2 class="fw-bold mb-4 pt-4" >Health & Nutrition Blogs</h2>
+
+  <!-- CATEGORY FILTER -->
+  <div class="d-flex gap-2 mb-4 flex-wrap">
+    <a href="/blogs"
+       class="btn {% if not selected_category %}btn-success{% else %}btn-outline-success{% endif %}">
+      All
+    </a>
+
+    <a href="/blogs?category=Nutrition Basics"
+       class="btn {% if selected_category=='Nutrition Basics' %}btn-success{% else %}btn-outline-success{% endif %}">
+      Nutrition Basics
+    </a>
+
+    <a href="/blogs?category=Fitness"
+       class="btn {% if selected_category=='Fitness' %}btn-success{% else %}btn-outline-success{% endif %}">
+      Fitness
+    </a>
+
+    <a href="/blogs?category=Disease"
+       class="btn {% if selected_category=='Recipes' %}btn-success{% else %}btn-outline-success{% endif %}">
+      Disease
+    </a>
+  </div>
+
+  <!-- BLOG LIST -->
+  <div class="row g-4">
+    {% for blog in blogs %}
+      <div class="col-md-4">
+        <div class="blog-card">
+
+          <span class="category-badge">{{ blog.category }}</span>
+
+          <h5>{{ blog.title }}</h5>
+
+          <p class="blog-meta">
+            {{ blog.created_at.strftime('%d %b %Y') }}
+          </p>
+
+          <p>{{ blog.summary }}</p>
+
+          <a href="/blogs/{{ blog.id }}"
+             class="btn btn-sm btn-outline-success">
+            Read More →
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if not blogs %}
+    <p class="text-muted mt-5">No blogs available.</p>
+  {% endif %}
+
+</div>
+
+{% include "footer.html" %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

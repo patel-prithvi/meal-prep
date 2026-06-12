@@ -1,0 +1,145 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}Meal Plans | Admin{% endblock %}
+
+{% block content %}
+
+<h2 class="fw-bold mb-4">
+    {% if filter == "active" %}
+        Active Meal Plans
+    {% else %}
+        All Meal Plans
+    {% endif %}
+</h2>
+
+<div class="d-flex gap-2 mb-4">
+    <a href="/admin/meal-plans?filter=all"
+       class="btn {% if filter == 'all' %}btn-success{% else %}btn-outline-success{% endif %}">
+        All Plans
+    </a>
+
+    <a href="/admin/meal-plans?filter=active"
+       class="btn {% if filter == 'active' %}btn-success{% else %}btn-outline-success{% endif %}">
+        Active Plans
+    </a>
+</div>
+
+<div class="admin-table-card p-4">
+<table class="admin-table align-middle">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>Duration</th>
+            <th>Calories</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for p in plans %}
+        <tr>
+            <td>{{ p.name }}</td>
+            <td>{{ p.email }}</td>
+            <td>
+                {{ p.start }} → {{ p.end }}
+            </td>
+            <td>{{ p.calories }} kcal</td>
+
+            <td>
+                {% if filter_type == "active" %}
+                    <span class="badge bg-success">Active</span>
+                {% else %}
+                {% if p.end >= today %}
+                    <span class="badge bg-success">Active</span>
+                {% else %}
+                    <span class="badge bg-secondary">Expired</span>
+                {% endif %}
+                {% endif %}
+            </td>
+
+            <td>
+                <a class="btn btn-sm btn-outline-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#planModal{{ p.plan_id }}">
+                    View Full Plan
+                </a>
+
+                <a class="btn btn-sm btn-outline-primary"
+                   href="/admin/users">
+                   View User
+                </a>
+                {% if p.end >= today %}
+                    <a class="btn btn-sm btn-outline-danger"
+                    href="/admin/meal-plans/{{ p.plan_id }}/invalidate"
+                    onclick="return confirm('Invalidate this plan?')">
+                    Invalidate
+                    </a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</div>
+{% for p in plans %}
+<div class="modal fade" id="planModal{{ p.plan_id }}" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content admin-modal">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Meal Plan ({{ p.start }} → {{ p.end }})
+                </h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <h6 class="section-title">Meal Plan Details</h6>
+
+                {% for day, meals in p.plan.items() %}
+                <div class="plan-card mb-3">
+
+                    <div class="row align-items emphasize align-items-start">
+                        
+                        <!-- DATE COLUMN -->
+                        <div class="col-md-3 fw-semibold section">
+                            {{ day }}
+                        </div>
+
+                        <!-- MEALS COLUMN -->
+                        <div class="col-md-9 d-flex flex-column gap-2">
+
+                            {% for meal_name, meal in meals.items() %}
+                            <div class="meal-row">
+
+                                <div class="meal-type">
+                                    {{ meal_name }}
+                                </div>
+
+                                <div class="meal-name">
+                                    {{ meal.name }}
+                                </div>
+
+                                <div class="meal-nutrition">
+                                    {{ meal.calories }} kcal |
+                                    P {{ meal.protein }}g |
+                                    C {{ meal.carbs }}g |
+                                    F {{ meal.fat }}g
+                                </div>
+
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

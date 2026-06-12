@@ -1,0 +1,65 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}Blogs | Admin{% endblock %}
+{% block page_title %}Blogs{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <a href="/admin/blogs/new" class="btn btn-success">
+    + New Blog
+  </a>
+</div>
+
+<div class="admin-table-card">
+
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Status</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for b in blogs %}
+    <tr>
+      <td>{{ b.title }}</td>
+      <td>{{ b.category }}</td>
+
+      <td>
+        {% if b.is_published %}
+          <span class="badge-active">Published</span>
+        {% else %}
+          <span class="badge-none">Draft</span>
+        {% endif %}
+      </td>
+
+      <td class="text-muted small">
+        {{ b.created_at.strftime("%d %b %Y") }}
+      </td>
+
+      <td class="d-flex gap-2">
+        <a href="/admin/blogs/{{ b.id }}/edit" class="btn btn-sm btn-outline-primary">Edit</a>
+        <a href="/admin/blogs/{{ b.id }}/delete"
+           class="btn btn-sm btn-outline-danger"
+           onclick="return confirm('Delete this blog?')">
+           Delete
+        </a>
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5" class="text-center text-muted py-4">
+        No blogs created yet.
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+
+{% endblock %}

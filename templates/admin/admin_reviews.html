@@ -1,0 +1,53 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}User Reviews | Admin{% endblock %}
+{% block page_title %}User Reviews{% endblock %}
+
+{% block content %}
+
+<div class="admin-table-card">
+
+<table class="admin-table align-middle">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Email</th>
+      <th>Rating</th>
+      <th>Review</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for r in reviews %}
+    <tr>
+      <td>{{ r.name }}</td>
+      <td>{{ r.email }}</td>
+
+      <td>
+        {% for i in range(r.rating) %}
+          ⭐
+        {% endfor %}
+      </td>
+
+      <td style="max-width: 380px;">
+        <span class="text-muted">{{ r.feedback }}</span>
+      </td>
+
+      <td class="text-muted small">
+        {{ r.created_at.strftime("%d %b %Y") }}
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5" class="text-center text-muted py-4">
+        No reviews yet.
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+
+{% endblock %}
