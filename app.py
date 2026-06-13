@@ -52,9 +52,20 @@ app.secret_key = "super_secret_key"   # move to .env later
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_DEFAULT_SENDER'] = ('Meal Prep', os.getenv("MAIL_USERNAME"))
+
+app.config['MAIL_DEFAULT_SENDER'] = (
+    'Meal Prep',
+    os.getenv("MAIL_USERNAME")
+)
+
 app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
 app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
+
+# IMPORTANT
+app.config['MAIL_TIMEOUT'] = 10
+
+mail = Mail(app)
+
 
 mail = Mail(app)
 
