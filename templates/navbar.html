@@ -1,15 +1,42 @@
 <style>
-/* ========== NAVBAR THEME ========== */
+
+/* =====================================
+   NAVBAR THEME
+===================================== */
+
 .navbar {
   background: var(--card);
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
   transition: background 0.4s ease;
+  padding: 14px 0;
 }
+
+body.dark .navbar {
+  background: #020617 !important;
+  border-bottom: 1px solid #1e293b;
+}
+
+/* =====================================
+   BRAND
+===================================== */
 
 .navbar-brand {
   font-weight: 700;
   color: var(--text) !important;
+  font-size: 1.3rem;
 }
+
+body.dark .navbar-brand {
+  color: #ffffff !important;
+}
+
+.navbar-brand img {
+  height: 30px;
+}
+
+/* =====================================
+   LINKS
+===================================== */
 
 .nav-link {
   color: var(--text) !important;
@@ -32,71 +59,173 @@
   background: var(--primary);
 }
 
-/* Dark mode brand fix */
-body.dark .navbar-brand {
-  color: #ffffff !important;
-}
+/* =====================================
+   THEME BUTTON
+===================================== */
 
-body.dark .navbar {
-  background: #020617 !important;
-  border-bottom: 1px solid #1e293b;
-}
-
-/* Toggle button */
 #themeToggle {
   transition: transform 0.3s ease;
 }
+
 #themeToggle:hover {
   transform: rotate(15deg);
 }
+
+/* =====================================
+   HAMBURGER BUTTON
+===================================== */
+
+.navbar-toggler {
+  border: none;
+  box-shadow: none !important;
+  padding: 6px 10px;
+}
+
+/* CUSTOM HAMBURGER ICON */
+
+.navbar-toggler-icon {
+  background-image: none !important;
+  width: 24px;
+  height: 2px;
+  background-color: var(--text);
+  position: relative;
+  border-radius: 2px;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background-color: var(--text);
+  border-radius: 2px;
+}
+
+.navbar-toggler-icon::before {
+  top: -7px;
+}
+
+.navbar-toggler-icon::after {
+  top: 7px;
+}
+
+/* =====================================
+   MOBILE NAVBAR
+===================================== */
+
+@media (max-width: 768px) {
+
+  .navbar-collapse {
+    background: var(--card);
+    margin-top: 15px;
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  body.dark .navbar-collapse {
+    background: #111827;
+  }
+
+  .navbar-nav {
+    gap: 12px;
+  }
+
+  .nav-link.active::after {
+    display: none;
+  }
+
+  .navbar .btn {
+    width: auto;
+  }
+
+  .navbar-brand span {
+    font-size: 1.2rem;
+  }
+}
+
 </style>
+
 
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/dashboard">
+
+    <!-- Logo -->
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2"
+       href="/dashboard">
       <img src="/static/images/logo.png" height="28">
       <span>Meal Prep</span>
     </a>
-    
-    <ul class="navbar-nav ms-auto align-items-center gap-3">
-      <li>
-        <a class="nav-link {% if request.path == '/dashboard' %}active{% endif %}"
-           href="/dashboard">
-          Home
-        </a>
-      </li>
 
-      <li>
-        <a class="nav-link {% if request.path == '/mealplan' %}active{% endif %}"
-           href="/mealplan">
-          Your Plan
-        </a>
-      </li>
+    <!-- Mobile Hamburger -->
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu"
+            aria-controls="navbarMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
 
-      <li>
-        <a class="nav-link" href="/blogs">Blog</a>
-      </li>
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <li>
-        <a class="nav-link" href="/profile">Profile</a>
-      </li>
+    <!-- Collapsible Menu -->
+    <div class="collapse navbar-collapse"
+         id="navbarMenu">
+
+      <ul class="navbar-nav ms-auto flex-column flex-lg-row align-items-start align-items-lg-center gap-2 gap-lg-3">
       
-      <li>
-        <button id="themeToggle"
-                class="btn btn-sm btn-outline-secondary"
-                onclick="toggleDark()">🌙</button>
-      </li>
 
-      <li>
-        <a href="/logout"
-          onclick="return confirm('Are you sure you want to logout?')"
-          class="btn btn-outline-danger btn-sm px-3">
-          Logout
-        </a>
-      </li>
-    </ul>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/dashboard' %}active{% endif %}"
+             href="/dashboard">
+            Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/mealplan' %}active{% endif %}"
+             href="/mealplan">
+            Your Plan
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/blogs">
+            Blog
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">
+            Profile
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <button id="themeToggle"
+                  class="btn btn-sm btn-outline-secondary"
+                  onclick="toggleDark()">
+            🌙
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <a href="/logout"
+             onclick="return confirm('Are you sure you want to logout?')"
+             class="btn btn-outline-danger btn-sm px-3">
+            Logout
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
   </div>
 </nav>
+
 
 <script>
 
