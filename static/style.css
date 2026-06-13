@@ -241,3 +241,136 @@ body {
     body.dark .carousel-item h3 {
       color: #6fa36a;
     }
+
+/* =========================================
+   MOBILE RESPONSIVE FIXES
+========================================= */
+
+@media (max-width: 768px) {
+
+  /* BODY */
+  body {
+    padding-top: 70px;
+  }
+
+  /* NAVBAR */
+  .navbar {
+    padding: 12px 0;
+  }
+
+  .navbar-brand span {
+    font-size: 1.3rem;
+  }
+
+  .navbar-brand img {
+    height: 34px;
+  }
+
+  .navbar .container {
+    align-items: center;
+  }
+
+  /* NAVBAR COLLAPSE */
+  .navbar-collapse {
+    background: white;
+    padding: 18px;
+    border-radius: 14px;
+    margin-top: 12px;
+  }
+
+  body.dark .navbar-collapse {
+    background: #111827;
+  }
+
+  .navbar-collapse .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* HERO SECTION */
+  .hero {
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  .hero .row {
+    flex-direction: column-reverse;
+  }
+
+  .hero h1 {
+    font-size: 2.7rem;
+    line-height: 1.2;
+    margin-top: 20px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .hero img {
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 25px;
+  }
+
+  /* BADGE */
+  .badge-india {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  /* BUTTONS */
+  .btn-main,
+  .btn-outline-secondary {
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 50px 18px;
+  }
+
+  /* INFO CARDS */
+  .info-card {
+    padding: 20px;
+  }
+
+  /* MEAL CARDS */
+  .meal-card {
+    margin-bottom: 25px;
+  }
+
+  .meal-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+  }
+
+  /* CAROUSEL */
+  .carousel-img {
+    width: 100%;
+    max-width: 100%;
+    height: 240px;
+    margin-bottom: 25px;
+  }
+
+  .carousel-item {
+    text-align: center;
+  }
+
+  .carousel-item h3 {
+    margin-top: 15px;
+  }
+
+  /* FAQ */
+  .accordion-button {
+    font-size: 15px;
+  }
+
+  /* CTA */
+  .section h4 {
+    font-size: 1.8rem;
+  }
+}
+
