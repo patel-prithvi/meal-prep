@@ -135,57 +135,57 @@ def signup():
     return redirect("/mealplan")
 
 # ---------------- VERIFY OTP ----------------
-@app.route("/verify-otp", methods=["GET", "POST"])
-def verify_otp():
-    if "signup_data" not in session:
-        return redirect("/auth?mode=signup")
+# @app.route("/verify-otp", methods=["GET", "POST"])
+# def verify_otp():
+#     if "signup_data" not in session:
+#         return redirect("/auth?mode=signup")
 
-    if request.method == "POST":
-        user_otp = request.form.get("otp")
+#     if request.method == "POST":
+#         user_otp = request.form.get("otp")
 
-        if not user_otp:
-            flash("Please enter OTP", "danger")
-            return redirect("/verify-otp")
+#         if not user_otp:
+#             flash("Please enter OTP", "danger")
+#             return redirect("/verify-otp")
 
-        if int(user_otp) == session["otp"]:
-            data = session["signup_data"]
+#         if int(user_otp) == session["otp"]:
+#             data = session["signup_data"]
 
-            conn = get_connection()
-            cur = conn.cursor()
-            cur.execute("SELECT id FROM users WHERE email=%s", (data["email"],))
-            if cur.fetchone():
-                flash("Email already registered. Please login.", "info")
-                session.clear()
-                return redirect("/auth?mode=login")
+#             conn = get_connection()
+#             cur = conn.cursor()
+#             cur.execute("SELECT id FROM users WHERE email=%s", (data["email"],))
+#             if cur.fetchone():
+#                 flash("Email already registered. Please login.", "info")
+#                 session.clear()
+#                 return redirect("/auth?mode=login")
 
-            user_id = create_user(data)
-            # msg = Message(
-            #     subject="🎉 Welcome to Meal Planner!",
-            #     recipients=[data["email"]]
-            # )
+#             user_id = create_user(data)
+#             # msg = Message(
+#             #     subject="🎉 Welcome to Meal Planner!",
+#             #     recipients=[data["email"]]
+#             # )
 
-            # msg.html = f"""
-            # <html>
-            # <body style="font-family: Arial; padding:20px;">
-            #     <h2 style="color:#4B5320;">Welcome {data['name']}! 🥗</h2>
-            #     <p>Your email has been successfully verified.</p>
-            #     <p>You can now generate personalized meal plans.</p>
-            #     <br>
-            #     <p>— Team Meal Planner</p>
-            # </body>
-            # </html>
-            # """
+#             # msg.html = f"""
+#             # <html>
+#             # <body style="font-family: Arial; padding:20px;">
+#             #     <h2 style="color:#4B5320;">Welcome {data['name']}! 🥗</h2>
+#             #     <p>Your email has been successfully verified.</p>
+#             #     <p>You can now generate personalized meal plans.</p>
+#             #     <br>
+#             #     <p>— Team Meal Planner</p>
+#             # </body>
+#             # </html>
+#             # """
 
-            # mail.send(msg)
+#             # mail.send(msg)
 
-            session.clear()
-            session["user_id"] = user_id
-            flash("Account verified successfully!", "success")
-            return redirect("/mealplan")
+#             session.clear()
+#             session["user_id"] = user_id
+#             flash("Account verified successfully!", "success")
+#             return redirect("/mealplan")
 
-        flash("Invalid OTP", "danger")
+#         flash("Invalid OTP", "danger")
 
-    return render_template("verify_otp.html")
+#     return render_template("verify_otp.html")
 
 # ---------------- LOGIN ----------------
 @app.route("/login", methods=["POST"])
