@@ -97,30 +97,42 @@ def signup():
             flash("This account is disabled. Please contact support.", "danger")
             return redirect("/auth?mode=signup")
 
-    otp = random.randint(100000, 999999)
+    # otp = random.randint(100000, 999999)
 
     session["signup_data"] = data
-    session["otp"] = otp
+    # session["otp"] = otp
 
-    msg = Message(
-        subject="Your Meal Prep Verification Code",
-        recipients=[data["email"]],
-    )
+    # msg = Message(
+    #     subject="Your Meal Prep Verification Code",
+    #     recipients=[data["email"]],
+    # )
         
-    msg.body = f"""
-        Hello,
+    # msg.body = f"""
+    #     Hello,
 
-        Your verification code is: {otp}
+    #     Your verification code is: {otp}
 
-        If you did not request this, please ignore this email.
+    #     If you did not request this, please ignore this email.
 
-        – Meal Prep Team
-    """
+    #     – Meal Prep Team
+    # """
 
-    mail.send(msg)
+    #  mail.send(msg)
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM users WHERE email=%s", (data["email"],))
+    if cur.fetchone():
+        flash("Email already registered. Please login.", "info")
+        session.clear()
+        return redirect("/auth?mode=login")
+
+    user_id = create_user(data)
+    session.clear()
+    session["user_id"] = user_id
 
     flash("OTP sent to your email", "success")
-    return redirect("/verify-otp")
+    # return redirect("/verify-otp")
+    return redirect("/mealplan")
 
 # ---------------- VERIFY OTP ----------------
 @app.route("/verify-otp", methods=["GET", "POST"])
@@ -147,24 +159,24 @@ def verify_otp():
                 return redirect("/auth?mode=login")
 
             user_id = create_user(data)
-            msg = Message(
-                subject="🎉 Welcome to Meal Planner!",
-                recipients=[data["email"]]
-            )
+            # msg = Message(
+            #     subject="🎉 Welcome to Meal Planner!",
+            #     recipients=[data["email"]]
+            # )
 
-            msg.html = f"""
-            <html>
-            <body style="font-family: Arial; padding:20px;">
-                <h2 style="color:#4B5320;">Welcome {data['name']}! 🥗</h2>
-                <p>Your email has been successfully verified.</p>
-                <p>You can now generate personalized meal plans.</p>
-                <br>
-                <p>— Team Meal Planner</p>
-            </body>
-            </html>
-            """
+            # msg.html = f"""
+            # <html>
+            # <body style="font-family: Arial; padding:20px;">
+            #     <h2 style="color:#4B5320;">Welcome {data['name']}! 🥗</h2>
+            #     <p>Your email has been successfully verified.</p>
+            #     <p>You can now generate personalized meal plans.</p>
+            #     <br>
+            #     <p>— Team Meal Planner</p>
+            # </body>
+            # </html>
+            # """
 
-            mail.send(msg)
+            # mail.send(msg)
 
             session.clear()
             session["user_id"] = user_id
