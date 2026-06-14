@@ -151,4 +151,4 @@ If you have feedback or suggestions, feel free to connect on LinkedIn.
 ## 👤 Author
 
 - **Prithvi Patel**  
-  [@student-prithvipatel](https://github.com/patel-prithvi)
+  [@patel-prithvi](https://github.com/patel-prithvi)
