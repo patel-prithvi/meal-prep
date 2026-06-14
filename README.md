@@ -5,6 +5,12 @@ Meal Prep is a Flask-based web application that generates customised meal plans 
 
 ---
 
+## 🚀 Live Demo
+
+https://flask-demoenv.onrender.com
+
+---
+
 ## 🚀 Features
 
 ### 👤 User Features
@@ -139,3 +145,10 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ### 📬 Contact
 If you have feedback or suggestions, feel free to connect on LinkedIn.
+
+---
+
+## 👤 Author
+
+- **Prithvi Patel**  
+  [@student-prithvipatel](https://github.com/patel-prithvi)
